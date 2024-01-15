@@ -10,8 +10,6 @@ const wrap = document.getElementById('wrap');
 const start = document.getElementById('start');
 const count = document.getElementById('count');
 
-const typeCountDiv = document.getElementById('type-count');
-
 // 複数のテキストを格納する配列
 const textLists = [
 	'Hello World', 'This is my App', 'How are you?',
@@ -60,7 +58,6 @@ const keyPress = e => {
 	// 正タイプの場合
 	// スコアのインクリメント
 	score++;
-	typeCountDiv.textContent = score;
 	wrap.classList.remove('mistyped');
 	typed += untyped.substring(0, 1);
 	untyped = untyped.substring(1);
@@ -97,12 +94,16 @@ const rankCheck = score => {
 const gameOver = id => {
 	clearInterval(id);
 
-	const result = confirm(rankCheck(score));
+	typedfield.textContent = '';
+	untypedfield.textContent = 'タイムアップ！';
 
-	// OKボタンをクリックされたらリロードする
-	if (result == true) {
-		window.location.reload();
-	}
+	setTimeout(() => {
+		const result = confirm(rankCheck(score));
+		// OKボタンをクリックされたらリロードする
+		if (result == true) {
+			window.location.reload();
+		}
+	}, 0);
 };
 
 // カウントダウンタイマー
@@ -138,7 +139,7 @@ start.addEventListener('click', () => {
 
 	// キーボードのイベント処理
 	document.addEventListener('keypress', keyPress);
-		
+
 });
 
 untypedfield.textContent = 'スタートボタンで開始';
